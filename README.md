@@ -17,3 +17,5 @@ Your users should be able to:
 - The first turn of the first round is always played by whoever is playing as X. For every following round, the first turn alternates between O and X.
 - After a round, if the player chooses to quit the game, they should be taken back to the new game menu.
 - If the restart icon in the top right is clicked, the "Restart game?" modal should show and allow the player to reset the game or cancel and continue to play.
+
+##
