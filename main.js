@@ -92,11 +92,23 @@ for (let index = 0; index < game.board.length; index++) {
 	boardSquares[index].addEventListener("mouseenter", e => {
 		if (game.board[index] === "") {
 			let turn = game.turn === "X" ? "x" : "o";
+			if (game.gameType === "P2P") {
+				
 			e.target.firstElementChild.setAttribute(
 				"src",
 				`./assets/icon-${turn}-outline.svg`
 			);
 			e.target.firstElementChild.classList.remove("d-none");
+			} else {
+				if (game.player1 === game.turn) {
+				e.target.firstElementChild.setAttribute(
+					"src",
+					`./assets/icon-${turn}-outline.svg`
+					);	
+					e.target.firstElementChild.classList.remove("d-none");
+				}
+			}
+			
 		}
 	});
 
