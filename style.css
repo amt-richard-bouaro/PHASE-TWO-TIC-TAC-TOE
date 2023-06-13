@@ -101,6 +101,7 @@ body {
     font-weight: 700;
     text-align: center;
     outline: none;
+    color: var(--dark-navy);
 }
 
 .btn-wide {
@@ -108,7 +109,7 @@ body {
     height: 67px;
     border-radius: 15px;
     font-size: 20px;
-
+    color: var(--dark-navy);
     letter-spacing: 1.25px;
 }
 
@@ -116,6 +117,7 @@ body {
     width: 76px;
     height: 52px;
     border-radius: 10px;
+    
 }
 
 .btn-sm-size {

@@ -79,11 +79,11 @@ if (
 	game_config !== null &&
 	JSON.parse(game_config).game_on
 ) {
-	// if (JSON.parse(gameState).gameType === "P2P") {
-	// 	p2pGame();
-	// } else {
-	playGame();
-	// }
+	if (JSON.parse(gameState).gameType === "P2P") {
+		p2pGame();
+	} else {
+		p2cpuGame();
+	}
 }
 
 //hover effect on slots/grid boxes
@@ -208,12 +208,14 @@ const restartConfirmed = document.getElementById("btn-confirm-restart");
 restartConfirmed.addEventListener("click", () => {
 	clearGameState();
 	toggleRestartWindow();
+	window.location.reload();
 });
 
 const quit = document.getElementById("btn-quit-game");
 quit.addEventListener("click", () => {
 	clearGameState();
 	showDialog("#game-result");
+	window.location.reload();
 });
 
 const nextRound = document.getElementById("btn-next-round");
@@ -221,7 +223,7 @@ nextRound.addEventListener("click", () => {
 	game.board = Array(9).fill("");
 	game.turnStart = game.turnStart === "X" ? "O" : "X";
 	game.turn = game.turnStart;
-	// game.lastWinner = "";
+	game.lastWinner = "";
 	saveGameState();
 	updatePlayerScore();
 
@@ -233,9 +235,9 @@ nextRound.addEventListener("click", () => {
 		boardSquares[index].firstElementChild.classList.add("d-none");
 		boardSquares[index].firstElementChild.setAttribute("src", "");
 	}
-	// if (game.gameType === "P2CPU") {
-	playGame();
-	// }
+	if (game.gameType === "P2CPU") {
+		p2cpuGame();
+	}
 
 	showDialog("#game-result");
 });
@@ -246,8 +248,7 @@ P2P.addEventListener("click", () => {
 	game.gameType = "P2P";
 	saveGameState();
 	updatePlayerScore();
-	// p2pGame();
-	playGame();
+	p2pGame();
 });
 
 const P2CPU = document.getElementById("newGameWithCPU");
@@ -256,7 +257,7 @@ P2CPU.addEventListener("click", () => {
 	game.gameType = "P2CPU";
 	saveGameState();
 	updatePlayerScore();
-	playGame();
+	p2cpuGame();
 });
 
 function cpuMove(board) {
@@ -311,7 +312,7 @@ function cpuMove(board) {
 	}
 }
 function p2pGame() {
-	console.log("P2P running");
+	console.log("P2P");
 	const gameState = JSON.parse(localStorage.getItem("gameState"));
 	if (gameState.gameType === "P2P") {
 		for (let index = 0; index < boardSquares.length; index++) {
@@ -331,46 +332,36 @@ function p2pGame() {
 
 function p2cpuGame() {
 	const gameState = JSON.parse(localStorage.getItem("gameState"));
-	if (gameState.gameType === "P2P") {
-		for (let index = 0; index < boardSquares.length; index++) {
-			boardSquares[index].addEventListener("click", () => {
-				game.makeMove(index);
-				saveGameState();
-				// console.log(game);
-				game.turn === "X"
-					? $(".x-turn").removeClass("d-none") &&
-					  $(".o-turn").addClass("d-none")
-					: $(".x-turn").addClass("d-none") &&
-					  $(".o-turn").removeClass("d-none");
-			});
-		}
-	} else if (gameState.gameType === "P2CPU") {
+	if (gameState.gameType === "P2CPU") {
 		if (game.board.every(slot => slot === "") && game.turn !== game.player1) {
 			const move = cpuMove(game.board);
 			game.makeMove(move);
 			saveGameState();
 		}
-		//console.log("i am still running");
 
 		for (let index = 0; index < boardSquares.length; index++) {
 			boardSquares[index].addEventListener("click", () => {
 				if (game.turn === game.player1) {
 					game.makeMove(index);
 					saveGameState();
+					game.turn === "X"
+						? $(".x-turn").removeClass("d-none") &&
+						  $(".o-turn").addClass("d-none")
+						: $(".x-turn").addClass("d-none") &&
+						  $(".o-turn").removeClass("d-none");
 
 					if (game.turn !== game.player1) {
 						const move = cpuMove(game.board);
 						setTimeout(() => {
 							game.makeMove(move);
 							saveGameState();
+							game.turn === "X"
+								? $(".x-turn").removeClass("d-none") &&
+								  $(".o-turn").addClass("d-none")
+								: $(".x-turn").addClass("d-none") &&
+								  $(".o-turn").removeClass("d-none");
 						}, 1000);
 					}
-
-					game.turn === "X"
-						? $(".x-turn").removeClass("d-none") &&
-						  $(".o-turn").addClass("d-none")
-						: $(".x-turn").addClass("d-none") &&
-						  $(".o-turn").removeClass("d-none");
 				}
 			});
 		}
@@ -399,47 +390,5 @@ export function playerWinsResult() {
 	$("#winner-img").attr("src", `./assets/icon-${winnerImg}.svg`);
 }
 
-function playGame() {
-	const gameState = JSON.parse(localStorage.getItem("gameState"));
 
-	for (let index = 0; index < boardSquares.length; index++) {
-		boardSquares[index].addEventListener("click", () => {
-			if (gameState.gameType === "P2P") {
-				game.makeMove(index);
-				saveGameState();
-				// console.log(game);
-				game.turn === "X"
-					? $(".x-turn").removeClass("d-none") &&
-					  $(".o-turn").addClass("d-none")
-					: $(".x-turn").addClass("d-none") &&
-					  $(".o-turn").removeClass("d-none");
-			} else if (gameState.gameType === "P2CPU") {
-				if (
-					game.board.every(slot => slot === "") &&
-					game.turn !== game.player1
-				) {
-					const move = cpuMove(game.board);
-					game.makeMove(move);
-					saveGameState();
-				} else if (game.turn === game.player1) {
-					game.makeMove(index);
-					saveGameState();
 
-					if (game.turn !== game.player1) {
-						const move = cpuMove(game.board);
-						setTimeout(() => {
-							game.makeMove(move);
-							saveGameState();
-						}, 1000);
-					}
-
-					game.turn === "X"
-						? $(".x-turn").removeClass("d-none") &&
-						  $(".o-turn").addClass("d-none")
-						: $(".x-turn").addClass("d-none") &&
-						  $(".o-turn").removeClass("d-none");
-				}
-			}
-		});
-	}
-}

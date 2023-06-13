@@ -1,202 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="./assets/favicon-32x32.png"
+		/>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png" />
+		<!-- main css -->
+		<link rel="stylesheet" href="./style.css" />
 
-  <!-- main css -->
-  <link rel="stylesheet" href="./style.css" />
+		<!-- font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Outfit"
+			rel="stylesheet"
+		/>
 
-  <!-- font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit" rel="stylesheet" />
+		<title>Frontend Mentor | Tic Tac Toe</title>
+		<script
+			src="https://code.jquery.com/jquery-3.7.0.min.js"
+			integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+			crossorigin="anonymous"
+		></script>
+		<!-- <script src="./script.js"></script> -->
+		<script type="module" src="./main.js"></script>
+	</head>
 
-  <title>Frontend Mentor | Tic Tac Toe</title>
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-  <script type="module" src="./script.js"></script>
-  <script type="module" src="./main.js"></script>
-</head>
+	<body>
+		<div id="game">
+			<div id="game-overlay" class="d-none">
+				<div id="overlay-dialog">
+					<div id="game-result" class="dialog d-none">
+						<p id="game-player-won" class=""></p>
+						<div class="mb-30 game-winner-msg">
+							<img id="winner-img" class="d-none" src="" alt="" />
+							<span class="game-winner-msg-text">Takes the round</span>
+						</div>
 
-<body>
-  <div id="game">
-    <div id="game-overlay" class="d-none">
-      <div id="overlay-dialog">
-        <div id="game-result" class="dialog d-none">
-          <p id="game-player-won" class=""></p>
-          <div class="mb-30 game-winner-msg">
-            <img id="winner-img" class="d-none" src="" alt="" />
-            <span class="game-winner-msg-text">Takes the round</span>
-          </div>
+						<div class="game-result-conrols">
+							<button id="btn-quit-game" class="btn btn-silver">
+								Quit
+							</button>
+							<button id="btn-next-round" class="btn btn-light-yellow">
+								Next Round
+							</button>
+						</div>
+					</div>
+					<div id="restart-game" class="dialog d-none">
+						<h2 class="mb-30 restart-dialog-msg">Restart Game?</h2>
 
-          <div class="game-result-conrols">
-            <button id="btn-quit-game" class="btn btn-silver">
-              Quit
-            </button>
-            <button id="btn-next-round" class="btn btn-light-yellow">Next Round</button>
-          </div>
-        </div>
-        <div id="restart-game" class="dialog d-none">
-          <h2 class="mb-30 restart-dialog-msg">Restart Game?</h2>
+						<div class="restart-conrols">
+							<button id="btn-cancel-restart" class="btn btn-silver">
+								No, Cancel
+							</button>
+							<button
+								class="btn btn-light-yellow"
+								id="btn-confirm-restart"
+							>
+								Yes, Restart
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
-          <div class="restart-conrols">
-            <button id="btn-cancel-restart" class="btn btn-silver">
-              No, Cancel
-            </button>
-            <button class="btn btn-light-yellow" id="btn-confirm-restart">
-              Yes, Restart
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+			<div id="game-area">
+				<div id="new-game" class="">
+					<img src="./assets/logo.svg" class="game-logo" alt="logo" />
+					<div class="select-player-area">
+						<span class="player-pick-text"
+							>Pick player <span id="whichPlayer">1</span>'s mark</span
+						>
 
-    <div id="game-area">
-      <div id="new-game" class="">
-        <img src="./assets/logo.svg" class="game-logo" alt="logo" />
-        <div class="select-player-area">
-          <span class="player-pick-text">Pick player <span id="whichPlayer">1</span>'s mark</span>
+						<div class="player-select">
+							<span
+								id="select-player-x"
+								class="select-this-player player-selected"
+							>
+								<svg
+									width="64"
+									height="64"
+									class="select-player-icon"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z"
+										fill="currentColor"
+										fill-rule="evenodd"
+										transform="scale(0.5)"
+									/>
+								</svg>
+							</span>
 
-          <div class="player-select">
-            <a href="#" id="select-player-x" class="select-this-player player-selected">
-              <svg width="64" height="64" class="select-player-icon" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z"
-                  fill="currentColor" fill-rule="evenodd" transform="scale(0.5)" />
-              </svg>
-            </a>
+							<span
+								id="select-player-o"
+								class="select-this-player"
+							>
+								<svg
+									width="64"
+									height="64"
+									class="select-player-icon"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z"
+										fill="currentColor"
+										transform="scale(0.5)"
+									/>
+								</svg>
+							</span>
+						</div>
+						<span class="remember-first-play-text"
+							>Remember: X goes first</span
+						>
+					</div>
+					<button
+						type="button"
+						id="newGameWithCPU"
+						class="btn btn-wide btn-light-yellow btn-mb"
+					>
+						New game (Vs CPU)
+					</button>
+					<button
+						type="button"
+						id="newGameWithPlayer"
+						class="btn btn-wide btn-light-blue"
+					>
+						New game (Vs Player)
+					</button>
+				</div>
 
-            <a href="#" id="select-player-o" class="select-this-player ">
-              <svg width="64" height="64" class="select-player-icon" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z"
-                  fill="currentColor" transform="scale(0.5)" />
-              </svg>
-            </a>
-          </div>
-          <span class="remember-first-play-text">Remember: X goes first</span>
-        </div>
-        <button type="button" id="newGameWithCPU" class="btn btn-wide btn-light-yellow btn-mb">
-          New game (Vs CPU)
-        </button>
-        <button type="button" id="newGameWithPlayer" class="btn btn-wide btn-light-blue">
-          New game (Vs Player)
-        </button>
-      </div>
+				<div id="game-board" class="d-none">
+					<div class="board-controls">
+						<img src="./assets/logo.svg" alt="board-logo" />
+						<div id="player-x-o-turn">
+							<div id="player-turn">
+								<svg
+									width="20"
+									height="20"
+									class="x-turn d-none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z"
+										fill="currentColor"
+										fill-rule="evenodd"
+										transform="scale(0.3130)"
+									/>
+								</svg>
+								<svg
+									width="20"
+									height="20"
+									class="o-turn"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z"
+										fill="currentColor"
+										transform="scale(0.3130)"
+									/>
+								</svg>
+							</div>
+							<span>turn</span>
+						</div>
+						<button
+							type="button"
+							id="restartBtn"
+							class="btn btn-sm-size btn-silver"
+						>
+							<svg
+								width="20"
+								height="20"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M19.524 0h-1.88a.476.476 0 0 0-.476.499l.159 3.284A9.81 9.81 0 0 0 9.835.317C4.415.317-.004 4.743 0 10.167.004 15.597 4.406 20 9.835 20a9.796 9.796 0 0 0 6.59-2.536.476.476 0 0 0 .019-.692l-1.348-1.349a.476.476 0 0 0-.65-.022 6.976 6.976 0 0 1-9.85-.63 6.987 6.987 0 0 1 .63-9.857 6.976 6.976 0 0 1 10.403 1.348l-4.027-.193a.476.476 0 0 0-.498.476v1.881c0 .263.213.476.476.476h7.944A.476.476 0 0 0 20 8.426V.476A.476.476 0 0 0 19.524 0Z"
+									fill="currentColor"
+								/>
+							</svg>
+						</button>
+					</div>
 
-      <div id="game-board" class="d-none">
-        <div class="board-controls">
-          <img src="./assets/logo.svg" alt="board-logo" />
-          <div id="player-x-o-turn">
-            <div id="player-turn">
-              <svg width="20" height="20" class="x-turn d-none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z"
-                  fill="currentColor" fill-rule="evenodd" transform="scale(0.3130)" />
-              </svg>
-              <svg width="20" height="20" class="o-turn" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z"
-                  fill="currentColor" transform="scale(0.3130)" />
-              </svg>
-            </div>
-            <span>turn</span>
-          </div>
-          <button type="button" id="restartBtn" class="btn btn-sm-size btn-silver">
-            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M19.524 0h-1.88a.476.476 0 0 0-.476.499l.159 3.284A9.81 9.81 0 0 0 9.835.317C4.415.317-.004 4.743 0 10.167.004 15.597 4.406 20 9.835 20a9.796 9.796 0 0 0 6.59-2.536.476.476 0 0 0 .019-.692l-1.348-1.349a.476.476 0 0 0-.65-.022 6.976 6.976 0 0 1-9.85-.63 6.987 6.987 0 0 1 .63-9.857 6.976 6.976 0 0 1 10.403 1.348l-4.027-.193a.476.476 0 0 0-.498.476v1.881c0 .263.213.476.476.476h7.944A.476.476 0 0 0 20 8.426V.476A.476.476 0 0 0 19.524 0Z"
-                fill="currentColor" />
-            </svg>
-          </button>
-        </div>
+					<div id="board">
+						<div class="board-square" >
+							<img
+								src="./assets/icon-o.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square" >
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square" >
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square" >
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square">
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square" >
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square" >
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square" >
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+						<div class="board-square" >
+							<img
+								src="./assets/icon-x.svg"
+								alt=""
+								class="mable d-none"
+							/>
+						</div>
+					</div>
 
-        <div id="board">
-          <div class="board-square">
-            <img src="./assets/icon-o.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-          <div class="board-square">
-            <img src="./assets/icon-x.svg" alt="" class="mable d-none" />
-          </div>
-        </div>
+					<div id="score-board" class="mt-20">
+						<div id="score-p-x" class="score-sheet">
+							<span class="span-normal"
+								>X (<span id="player-x">CPU</span>)</span
+							><br />
+							<span id="p-x-score" class="span-bold">0</span>
+						</div>
+						<div id="score-ties" class="score-sheet">
+							<span class="span-normal">Ties</span><br />
+							<span id="ties-score" class="span-bold">20</span>
+						</div>
+						<div id="score-p-o" class="score-sheet">
+							<span class="span-normal"
+								>O (<span id="player-o">P1</span>)</span
+							><br />
+							<span id="p-o-score" class="span-bold">11</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div id="score-board" class="mt-20">
-          <div id="score-p-x" class="score-sheet">
-            <span class="span-normal">X (<span id="player-x">CPU</span>)</span><br />
-            <span id="p-x-score" class="span-bold">0</span>
-          </div>
-          <div id="score-ties" class="score-sheet">
-            <span class="span-normal">Ties</span><br />
-            <span id="ties-score" class="span-bold">20</span>
-          </div>
-          <div id="score-p-o" class="score-sheet">
-            <span class="span-normal">O (<span id="player-o">P1</span>)</span><br />
-            <span id="p-o-score" class="span-bold">11</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+		<!-- New game menu start -->
 
-  <!-- New game menu start -->
+		<!-- Pick player 1's mark -->
+		<!-- Remember: X goes first -->
 
-  <!-- Pick player 1's mark -->
-  <!-- Remember: X goes first -->
+		<!-- New Game (vs CPU) -->
+		<!-- New Game (vs player) -->
 
-  <!-- New Game (vs CPU) -->
-  <!-- New Game (vs player) -->
+		<!-- New game menu end -->
 
-  <!-- New game menu end -->
+		<!-- Game board start -->
 
-  <!-- Game board start -->
+		<!-- x/o icon turn -->
 
-  <!-- x/o icon turn -->
+		<!-- X (You) Your score -->
+		<!-- Ties Ties score -->
+		<!-- X (CPU) CPU score -->
 
-  <!-- X (You) Your score -->
-  <!-- Ties Ties score -->
-  <!-- X (CPU) CPU score -->
+		<!-- Oh no, you lost -->
+		<!-- You won! -->
+		<!-- Player 1/2 wins! -->
 
-  <!-- Oh no, you lost -->
-  <!-- You won! -->
-  <!-- Player 1/2 wins! -->
+		<!-- x/o icon takes the round -->
+		<!-- Round tied -->
+		<!-- Restart game? -->
 
-  <!-- x/o icon takes the round -->
-  <!-- Round tied -->
-  <!-- Restart game? -->
+		<!-- Quit -->
+		<!-- Next round -->
+		<!-- No, cancel -->
+		<!-- Yes, restart -->
 
-  <!-- Quit -->
-  <!-- Next round -->
-  <!-- No, cancel -->
-  <!-- Yes, restart -->
+		<!-- Game board end -->
 
-  <!-- Game board end -->
-
-  <script type="module" src="./game.js"></script>
-</body>
-
+		<script type="module" src="./game.js"></script>
+	</body>
 </html>
