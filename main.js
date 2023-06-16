@@ -150,6 +150,7 @@ const clearGameState = () => {
 	game.scoreCard = { playerX: 0, playerO: 0, ties: 0 };
 	game.turn = "X";
 	game.player1 = "X";
+	game.lastWinner = "";
 
 	for (let index = 0; index < 9; index++) {
 		boardSquares[index].firstElementChild.classList.add("d-none");
@@ -203,7 +204,7 @@ function updatePlayerScore() {
 	$("#p-o-score").text(game.scoreCard.playerO);
 	$("#player-o").text(po());
 }
-// console.log(game);
+
 updatePlayerScore();
 
 const restartCancel = document.getElementById("btn-cancel-restart");
@@ -218,13 +219,33 @@ restartBtn.addEventListener("click", () => {
 
 const restartConfirmed = document.getElementById("btn-confirm-restart");
 restartConfirmed.addEventListener("click", () => {
-	clearGameState();
-	toggleRestartWindow();
+
+game.board = Array(9).fill("");
+game.scoreCard = { playerX: 0, playerO: 0, ties: 0 };
+game.turn = "X";
+
+for (let index = 0; index < 9; index++) {
+	boardSquares[index].firstElementChild.classList.add("d-none");
+	boardSquares[index].firstElementChild.setAttribute("src", "");
+}
+
+	saveGameState();
 	window.location.reload();
+
+
+
+// previous my restart behavior was to take user to new game
+	
+	//clearGameState();
+	//toggleRestartWindow();
+	//window.location.reload();
+
+// previous restart
 });
 
 const quit = document.getElementById("btn-quit-game");
 quit.addEventListener("click", () => {
+	
 	clearGameState();
 	showDialog("#game-result");
 	window.location.reload();
@@ -391,7 +412,6 @@ export function playerWinsResult() {
 			game.lastWinner !== game.player1 ? "Oh no, you lost..." : "You won!";
 	}
 
-	console.log(game.lastWinner);
 	$("#game-player-won").removeClass("d-none");
 	$("#game-player-won").text(text);
 
