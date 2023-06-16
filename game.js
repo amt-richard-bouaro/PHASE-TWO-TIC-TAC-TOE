@@ -26,14 +26,19 @@ function Game() {
 
 				if (this.checkWin(this.board)) {
 					this.scoreCard.playerX += 1;
-                     this.lastWinner = "X";
-                    playerWinsResult()                  
-					showDialog("#game-result");
+					this.lastWinner = "X";
+					setTimeout(() => {
+					 playerWinsResult()                  
+					showDialog("#game-result");	
+					}, 1000);
+                   
 				} else if (this.board.every(idx => idx !== "")) {
                     this.scoreCard.ties += 1;
-                    tieResults();
                     this.lastWinner = ""
-					showDialog("#game-result");
+					setTimeout(() => {
+						tieResults();
+						showDialog("#game-result");
+					}, 1000);
 				} else {
 					this.turn = this.turn === "X" ? "O" : "X";
 				}
@@ -49,12 +54,17 @@ function Game() {
 				if (this.checkWin(this.board)) {
                     this.scoreCard.playerO += 1;
                     this.lastWinner = "O";
-					playerWinsResult();
-					showDialog("#game-result");
+					setTimeout(() => {
+						playerWinsResult();
+						showDialog("#game-result");
+					}, 1000);
 				} else if (this.board.every(idx => idx !== "")) {
-                    this.scoreCard.ties += 1;
-                    tieResults();
+					this.scoreCard.ties += 1;
+					setTimeout(() => {
+						tieResults();
 					showDialog("#game-result");
+					}, 1000);
+                    
 				} else {
 					this.turn = this.turn === "X" ? "O" : "X";
 				}

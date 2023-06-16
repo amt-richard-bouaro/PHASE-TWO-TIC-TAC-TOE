@@ -121,8 +121,11 @@ for (let index = 0; index < game.board.length; index++) {
 }
 
 if (game.checkWin(game.board)) {
+	setTimeout(() => {
 	showDialog("#game-result");
 	playerWinsResult();
+	}, 1000);
+	
 } else if (game.board.every(idx => idx !== "")) {
 	showDialog("#game-result");
 	tieResults();
