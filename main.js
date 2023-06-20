@@ -223,27 +223,24 @@ restartBtn.addEventListener("click", () => {
 const restartConfirmed = document.getElementById("btn-confirm-restart");
 restartConfirmed.addEventListener("click", () => {
 
-game.board = Array(9).fill("");
-game.scoreCard = { playerX: 0, playerO: 0, ties: 0 };
-game.turn = "X";
+// game.board = Array(9).fill("");
+// game.scoreCard = { playerX: 0, playerO: 0, ties: 0 };
+// game.turn = "X";
 
-for (let index = 0; index < 9; index++) {
-	boardSquares[index].firstElementChild.classList.add("d-none");
-	boardSquares[index].firstElementChild.setAttribute("src", "");
-}
+// for (let index = 0; index < 9; index++) {
+// 	boardSquares[index].firstElementChild.classList.add("d-none");
+// 	boardSquares[index].firstElementChild.setAttribute("src", "");
+// }
 
-	saveGameState();
+// 	saveGameState();
+// 	window.location.reload();
+
+	
+	clearGameState();
+	toggleRestartWindow();
 	window.location.reload();
 
 
-
-// previous my restart behavior was to take user to new game
-	
-	//clearGameState();
-	//toggleRestartWindow();
-	//window.location.reload();
-
-// previous restart
 });
 
 const quit = document.getElementById("btn-quit-game");
@@ -371,8 +368,12 @@ function p2cpuGame() {
 	if (gameState.gameType === "P2CPU") {
 		if (game.board.every(slot => slot === "") && game.turn !== game.player1) {
 			const move = cpuMove(game.board);
-			game.makeMove(move);
-			saveGameState();
+			setTimeout(() => {
+				game.makeMove(move);
+				saveGameState();
+			}, 1000);
+			
+			
 		}
 
 		for (let index = 0; index < boardSquares.length; index++) {
@@ -389,8 +390,12 @@ function p2cpuGame() {
 					if (game.turn !== game.player1) {
 						const move = cpuMove(game.board);
 						setTimeout(() => {
-							game.makeMove(move);
-							saveGameState();
+							setTimeout(() => {
+								game.makeMove(move);
+								saveGameState();
+							}, 1000);
+							
+							
 							game.turn === "X"
 								? $(".x-turn").removeClass("d-none") &&
 								  $(".o-turn").addClass("d-none")
